@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">UnityAndroidPlugin</string>
+    <string name="title_activity_bluetooth">BluetoothActivity</string>
+</resources>
