@@ -218,6 +218,34 @@ public class CsvWriter {
                 rData[APNEA_MAX_TIME_INDEX_2],
                 (byte)0,
                 (byte)0)));
+
+            int rDataLength = rData.length;
+            if(rDataLength >= 19) { //デバイス設定
+                int sleepMode = rData[18] & 0x03; //0011
+                int vibrationStrength = (rData[18] & 0x0C) >> 2; //1100
+                int snoreSensitivity = (rData[18] & 0x30) >> 4;  //0011 0000
+                int apneaSensitivity = (rData[18] & 0xC0) >> 6;  //1100 0000
+
+                bw.write(COMMMA);
+                bw.write(Integer.toString(sleepMode));
+
+                bw.write(COMMMA);
+                bw.write(Integer.toString(vibrationStrength));
+
+                bw.write(COMMMA);
+                bw.write(Integer.toString(snoreSensitivity));
+
+                bw.write(COMMMA);
+                bw.write(Integer.toString(apneaSensitivity));
+
+                if(rDataLength >= 20) { //抑制開始設定時間 (1byte)
+                    int suppressionStartTime = rData[19] & 0xff;
+
+                    bw.write(COMMMA);
+                    bw.write(Integer.toString(suppressionStartTime));
+                }
+            }
+
             bw.newLine();
 
             bw.flush(); //フラッシュ書込
