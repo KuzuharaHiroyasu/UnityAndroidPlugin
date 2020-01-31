@@ -50,7 +50,7 @@ public class MyApplication extends Application {
         singleton  = this;
 
         // Start to the service
-        BleService.start(this); //接続開始：ServiceをDestoryしたくないので起動時にやっておく
+//        BleService.start(this); //接続開始：ServiceをDestoryしたくないので起動時にやっておく
 
         // Bind to the service
         //Intent gattServiceIntent = new Intent(this, BleService.class);
