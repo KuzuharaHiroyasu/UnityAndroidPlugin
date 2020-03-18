@@ -2288,16 +2288,18 @@ public class BleService extends Service {
 
         _writeType = wType; //書込成功時にタイプを設定
 
-        BluetoothGattCharacteristic gattCharWrite;
+        BluetoothGattCharacteristic gattCharWrite = null;
 
         if (serviceUUID.equals(UUID_SERVICE_DECLARATION)) {
             gattCharWrite = _BluetoothGattWriteCharacteristic;
         } else {
             if (fwUpType == FirmwareUpdateCharacteristicType.Control && bleGattCharWriteFWUPControl != null) {
                 bleGattCharWriteFWUPControl.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
-               _BluetoothGatt.setCharacteristicNotification(bleGattCharWriteFWUPControl, false);
+                if(_BluetoothGatt != null) {
+                    _BluetoothGatt.setCharacteristicNotification(bleGattCharWriteFWUPControl, false);
+                }
                 gattCharWrite = bleGattCharWriteFWUPControl;
-            } else {
+            } else if (bleGattCharWriteFWUPData != null) {
                 bleGattCharWriteFWUPData.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
                 gattCharWrite = bleGattCharWriteFWUPData;
             }
